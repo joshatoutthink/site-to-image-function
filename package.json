@@ -1,0 +1,21 @@
+{
+  "name": "article-scraper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "chrome-aws-lambda": "^9.1.0",
+    "netlify-lambda": "^2.0.7",
+    "puppeteer-core": "^9.1.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  },
+  "scripts": {
+    "build": "echo building",
+    "postinstall": "netlify-lambda install"
+  },
+  "devDependencies": {
+    "puppeteer": "^9.1.1"
+  }
+}
