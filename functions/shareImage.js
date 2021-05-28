@@ -44,6 +44,7 @@ async function webScrape({ event }, _, isProd) {
   try {
     const launchConfig = {
       headless: isProd ? chromium.headless : true,
+      args: chromium.args,
     };
     if (isProd) {
       launchConfig.executablePath = await chromium.executablePath;
