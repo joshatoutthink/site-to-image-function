@@ -1,6 +1,6 @@
 const chromium = require("chrome-aws-lambda");
 
-async function webScrape({ event }, puppeteer, isProd) {
+async function webScrape({ event }, _, isProd) {
   // BUILDING THE URL OF SITE TO SCREENSHOT
   const [, , ...rest] = event.path.split("/");
   const paths = rest.join("/").split("~/");
