@@ -7,7 +7,13 @@ const chromium = require("chrome-aws-lambda");
 //   return res;
 // };
 
-exports.handler = webScrape;
+// exports.handler = webScrape;
+exports.handler = async function hey() {
+  return {
+    status: 200,
+    body: "hey",
+  };
+};
 
 async function webScrape(event) {
   // BUILDING THE URL OF SITE TO SCREENSHOT
