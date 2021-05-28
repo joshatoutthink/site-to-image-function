@@ -1,6 +1,4 @@
-const chromium = require("chrome-aws-lambda");
-
-async function webScrape({ event }, _, isProd) {
+async function webScrape({ event }, chromium, isProd) {
   // BUILDING THE URL OF SITE TO SCREENSHOT
   const [, , ...rest] = event.path.split("/");
   const paths = rest.join("/").split("~/");
@@ -28,6 +26,7 @@ async function webScrape({ event }, _, isProd) {
   try {
     const launchConfig = {
       headless: isProd ? chromium.headless : true,
+      args: chromium.args,
     };
     if (isProd) {
       launchConfig.executablePath = await chromium.executablePath;
@@ -67,8 +66,6 @@ async function webScrape({ event }, _, isProd) {
   }
 }
 
-module.exports = { webScrape };
-
 const findUrlOption = (o) => o.key == "url";
 const findWidthOption = (o) => o.key == "width" || o.key == "w";
 const findHeightOption = (o) => o.key == "height" || o.key == "h";
@@ -83,3 +80,4 @@ function filterOutReserved(o) {
   }
   return true;
 }
+module.exports = { webScrape };
