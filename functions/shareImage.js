@@ -7,7 +7,7 @@ const chromium = require("chrome-aws-lambda");
 //   return res;
 // };
 
-exports.handler = builder(webScrape);
+exports.handler = webScrape;
 
 async function webScrape(event) {
   // BUILDING THE URL OF SITE TO SCREENSHOT
