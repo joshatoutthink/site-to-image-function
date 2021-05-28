@@ -10,7 +10,7 @@
     "puppeteer-core": "^9.1.1"
   },
   "scripts": {
-    "build": "rm function/shareImage-dev.js",
+    "build": "rm functions/shareImage-dev.js",
     "postinstall": "netlify-lambda install"
   },
   "devDependencies": {
