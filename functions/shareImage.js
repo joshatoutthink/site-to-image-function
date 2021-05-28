@@ -1,7 +1,7 @@
-// const puppeteer = require("puppeteer-core");
-// const { builder } = require("@netlify/functions");
+const puppeteer = require("puppeteer-core");
+const { builder } = require("@netlify/functions");
 // // const { webScrape } = require("../src/webscrape.js");
-// const chromium = require("chrome-aws-lambda");
+const chromium = require("chrome-aws-lambda");
 // // const handler = async (event, context) => {
 // //   res = await webScrape({ event, context }, puppeteer, true);
 // //   return res;
@@ -17,7 +17,7 @@ exports.handler = async function hey() {
 
 // async function webScrape(event) {
 //   // BUILDING THE URL OF SITE TO SCREENSHOT
-//   const [, , ...rest] = event.path.split("/");
+//   const [_, _, ...rest] = event.path.split("/");
 //   const paths = rest.join("/").split("~/");
 //   const options = paths.reduce((options, entry, i, all) => {
 //     if (i % 2 == 0) {
