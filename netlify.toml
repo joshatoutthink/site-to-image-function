@@ -2,4 +2,5 @@
   functions = "./functions"
 [functions]
   directory = "./functions"
-  include_files = ["src/**/*"]
+  [functions.include_files]
+    include_files = ["./src/**/*"]
