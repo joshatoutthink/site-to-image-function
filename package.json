@@ -13,7 +13,7 @@
     "request-promise": "^4.2.6"
   },
   "scripts": {
-    "build": "echo building",
+    "build": "rm functions/shareImage-dev.js",
     "postinstall": "netlify-lambda install"
   },
   "devDependencies": {
