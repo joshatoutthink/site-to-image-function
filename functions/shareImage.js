@@ -8,7 +8,7 @@ const handler = async (event, context) => {
   return res;
 };
 
-exports.handler = handler;
+exports.handler = builder(handler);
 //exports.handler = async function hey() {
 //  return {
 //    status: 200,
