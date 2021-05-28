@@ -1,22 +1,22 @@
 const puppeteer = require("puppeteer-core");
 const { builder } = require("@netlify/functions");
-// // const { webScrape } = require("../src/webscrape.js");
-const chromium = require("chrome-aws-lambda");
-// // const handler = async (event, context) => {
-// //   res = await webScrape({ event, context }, puppeteer, true);
-// //   return res;
-// // };
-
-// exports.handler = webScrape;
-exports.handler = async function hey() {
-  return {
-    status: 200,
-    body: "hey",
-  };
+ const { webScrape } = require("../src/webscrape.js");
+//const chromium = require("chrome-aws-lambda");
+const handler = async (event, context) => {
+  res = await webScrape({ event, context }, puppeteer, true);
+   return res;
 };
 
-// async function webScrape(event) {
-//   // BUILDING THE URL OF SITE TO SCREENSHOT
+exports.handler = handler;
+//exports.handler = async function hey() {
+//  return {
+//    status: 200,
+ //   body: "hey",
+//  };
+//};
+
+ //async function webScrape(event) {
+  // BUILDING THE URL OF SITE TO SCREENSHOT
 //   const [_, _, ...rest] = event.path.split("/");
 //   const paths = rest.join("/").split("~/");
 //   const options = paths.reduce((options, entry, i, all) => {
