@@ -33,7 +33,7 @@ async function webScrape({ event }, puppeteer, isProd) {
       launchConfig.executablePath = await chromium.executablePath;
     }
 
-    browser = await puppeteer.launch(launchConfig);
+    browser = await chromium.puppeteer.launch(launchConfig);
 
     var page = await browser.newPage();
     page.setViewport({
