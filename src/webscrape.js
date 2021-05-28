@@ -2,7 +2,7 @@ const chromium = require("chrome-aws-lambda");
 
 async function webScrape({ event }, puppeteer, isProd) {
   // BUILDING THE URL OF SITE TO SCREENSHOT
-  const [, , ...rest] = event.path.split("/");
+  const [,, ...rest] = event.path.split("/");
   const paths = rest.join("/").split("~/");
   const options = paths.reduce((options, entry, i, all) => {
     if (i % 2 == 0) {
@@ -10,7 +10,7 @@ async function webScrape({ event }, puppeteer, isProd) {
     }
     return options;
   }, []);
-  let url = options.find(findUrlOption)?.value;
+  let url = options.find(findUrlOption) && options.find(findUrlOption).value;
   if (!url) {
     return {
       statusCode: 400,
@@ -38,8 +38,8 @@ async function webScrape({ event }, puppeteer, isProd) {
 
     var page = await browser.newPage();
     page.setViewport({
-      width: parseInt(width.value) ?? 1200,
-      height: parseInt(height.value) ?? 800,
+      width: parseInt(width.value) || 1200,
+      height: parseInt(height.value) || 800,
       deviceScaleFactor: 2,
     });
     await page.goto(`${url}`);
