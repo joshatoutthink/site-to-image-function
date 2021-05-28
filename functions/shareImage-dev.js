@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const { webscrape } = require("./webscrape.js");
+const { webScrape } = require("./webscrape.js");
 
 exports.handler = (event, context) =>
-  webscrape({ event, context }, puppeteer, false);
+  webScrape({ event, context }, puppeteer, false);

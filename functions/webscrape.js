@@ -1,12 +1,32 @@
 const chromium = require("chrome-aws-lambda");
 
 async function webScrape({ event }, puppeteer, isProd) {
-  const { url, title, image, text } = event.queryStringParameters;
-  console.log(url);
+  // BUILDING THE URL OF SITE TO SCREENSHOT
+  const [, , ...rest] = event.path.split("/");
+  const paths = rest.join("/").split("~/");
+  const options = paths.reduce((options, entry, i, all) => {
+    if (i % 2 == 0) {
+      options.push({ key: entry, value: all[i + 1] });
+    }
+    return options;
+  }, []);
+  let url = options.find(findUrlOption)?.value;
+  if (!url) {
+    return {
+      statusCode: 400,
+      body: "no url option was provided",
+    };
+  }
+  url += options
+    .filter(filterOutReserved) //removes the url option
+    .reduce((url, { key, value }) => `${url}&${key}=${value}`, "?");
+
+  const width = options.find(findWidthOption);
+  const height = options.find(findHeightOption);
+  console.log(parseInt(width.value));
+  // SCREENSHOOTING THE PARSED URL
   var browser;
   try {
-    // console.log(`${url}&title=${title}&text=${text}&image=${image}`);
-
     const launchConfig = {
       headless: isProd ? chromium.headless : true,
     };
@@ -17,8 +37,14 @@ async function webScrape({ event }, puppeteer, isProd) {
     browser = await puppeteer.launch(launchConfig);
 
     var page = await browser.newPage();
-    await page.goto(`${url}?title=${title}&image=${image}`);
-    await page.waitForTimeout(500);
+    page.setViewport({
+      width: parseInt(width.value) ?? 1200,
+      height: parseInt(height.value) ?? 800,
+      deviceScaleFactor: 2,
+    });
+    await page.goto(`${url}`);
+    // await page.waitForTimeout(isProd ? 100 : 100);
+    await page.waitForSelector("body");
     const screenshot = await page.screenshot();
 
     await browser.close();
@@ -33,7 +59,7 @@ async function webScrape({ event }, puppeteer, isProd) {
     };
   } catch (err) {
     // Catch and display errors
-    console.log(err);
+    console.error(err);
     await browser.close();
     return {
       statusCode: 200,
@@ -43,3 +69,18 @@ async function webScrape({ event }, puppeteer, isProd) {
 }
 
 module.exports = { webScrape };
+
+const findUrlOption = (o) => o.key == "url";
+const findWidthOption = (o) => o.key == "width" || o.key == "w";
+const findHeightOption = (o) => o.key == "height" || o.key == "h";
+
+// add all callback functions that look for reserved keys
+const reservedCb = [findUrlOption, findWidthOption, findHeightOption];
+function filterOutReserved(o) {
+  for (cb of reservedCb) {
+    if (cb(o)) {
+      return false;
+    }
+  }
+  return true;
+}
