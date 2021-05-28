@@ -3,4 +3,4 @@
 [functions]
   directory = "./functions"
   [functions.include_files]
-    include_files = ["./src/**/*"]
+    include_files = ["/src/**/*"]
